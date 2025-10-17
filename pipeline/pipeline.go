@@ -17,6 +17,7 @@ package pipeline
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strings"
 	"sync"
 	"time"
@@ -127,6 +128,11 @@ func (r *Runtime) Run(runnerCtx context.Context) error {
 				Exited:   true,
 				ExitCode: 1,
 			}
+			if err != nil {
+				fmt.Println("#######################################")
+				fmt.Println(err)
+				fmt.Println("#######################################")
+			}
 
 			// Trace the error if we have a tracer
 			if r.tracer != nil {
@@ -134,6 +140,12 @@ func (r *Runtime) Run(runnerCtx context.Context) error {
 					logger.Error().Err(err).Msg("failed to trace step error")
 				}
 			}
+		}
+
+		if err != nil {
+			fmt.Println("#######################################")
+			fmt.Println(err)
+			fmt.Println("#######################################")
 		}
 
 		return err
